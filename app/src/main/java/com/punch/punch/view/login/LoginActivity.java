@@ -1,7 +1,9 @@
-package com.punch.punch;
+package com.punch.punch.view.login;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.punch.punch.R;
 
 public class LoginActivity extends AppCompatActivity {
 
