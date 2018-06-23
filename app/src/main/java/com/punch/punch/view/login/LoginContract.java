@@ -9,7 +9,7 @@ import com.punch.punch.view.BaseView;
 
 public interface LoginContract {
 
-    interface View extends BaseView{
+    interface View extends BaseView<Presenter>{
 
         /**
          * 인증을 위한 구글Oauth Api를 띄우는 메소드
