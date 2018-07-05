@@ -24,6 +24,7 @@ import com.google.android.gms.common.api.Scope;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.punch.punch.R;
+import com.punch.punch.model.Authentication;
 import com.punch.punch.view.BasePresenter;
 
 public class LoginFragment extends Fragment implements LoginContract.View{
@@ -85,7 +86,7 @@ public class LoginFragment extends Fragment implements LoginContract.View{
     public void onStart() {
         super.onStart();
 
-        LoginContract.Presenter presenter = new LoginPresenter(this);
+        LoginContract.Presenter presenter = new LoginPresenter(this, Authentication.getInstance());
 
         // Check if the user is already signed in and all required scopes are granted
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(getContext());

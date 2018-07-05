@@ -5,15 +5,17 @@ import com.punch.punch.model.Authentication;
 public class LoginPresenter implements LoginContract.Presenter {
 
     private LoginContract.View mView;
+    private Authentication mAuthentication;
 
-    public LoginPresenter(LoginContract.View view){
+    public LoginPresenter(LoginContract.View view, Authentication authentication){
         mView = view;
         mView.setPresenter(this);
+        mAuthentication = authentication;
     }
 
     @Override
     public void requestAuthentication(String token) {
-        Authentication authentication = Authentication.getInstance();
+        Authentication authentication = mAuthentication;
         boolean isSuccess = authentication.signIn(token);
         String uid = authentication.getUid();
         if(isSuccess){
