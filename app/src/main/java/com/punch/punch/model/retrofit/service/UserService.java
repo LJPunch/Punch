@@ -1,5 +1,10 @@
 package com.punch.punch.model.retrofit.service;
 
+import com.punch.punch.model.retrofit.vo.UserGroupApi;
+import com.punch.punch.model.retrofit.vo.UserGroupsApi;
+import com.punch.punch.model.retrofit.vo.UserInfoApi;
+import com.punch.punch.model.retrofit.vo.UserTasteApi;
+
 import java.util.List;
 
 import retrofit2.Call;
@@ -11,20 +16,20 @@ import retrofit2.http.Path;
 public interface UserService {
 
     @GET("/users/{uid}/info")
-    Call<List<UserVO>> getUserInfo(@Path("uid") UserVO userVO);
+    Call<UserInfoApi.GetResponseVO> getUserInfo(@Path("uid") int uid);
 
     @GET("/users/{uid}/taste")
-    Call<List<UserTasteVO>> getUserTasteInfo(@Path("uid") UserVO userVO);
+    Call<UserTasteApi.GetResponseVO> getUserTasteInfo(@Path("uid") int uid);
 
     @PUT("/users/{uid}/taste")
-    Call<List<TokenVO>> initUserTasteInfo(@Path("uid") UserVO userVO);
+    Call<Void> initUserTasteInfo(@Path("uid") int uid);
 
     @GET("/users/{uid}/groups")
-    Call<List<GroupVO>> getUserGroupList(@Path("uid") UserVO userVO);
+    Call<UserGroupsApi.GetResponseVO> getUserGroupList(@Path("uid") int uid);
 
     @GET("/users/{uid}/groups/{gid}")
-    Call<List<GroupVO>> getUserGroupInfo(@Path("uid") UserVO userVO , @Path("gid") GroupVO groupVO);
+    Call<UserGroupApi.GetResponseVO> getUserGroupInfo(@Path("uid") int uid , @Path("gid") int gid);
 
     @DELETE("/users/{uid}/groups/{gid}")
-    Call<List<ResultVO>> exitUserGroup(@Path("uid") UserVO userVO , @Path("gid") GroupVO groupVO);
+    Call<Void> exitUserGroup(@Path("uid") int uid , @Path("gid") int gid);
 }

@@ -1,5 +1,8 @@
 package com.punch.punch.model.retrofit.service;
 
+import com.punch.punch.model.retrofit.vo.AuthenticationApi;
+import com.punch.punch.model.retrofit.vo.AuthenticationsApi;
+
 import java.util.List;
 
 import retrofit2.Call;
@@ -12,12 +15,12 @@ import retrofit2.http.Path;
 public interface AuthenticationService {
 
     @GET("/authentication/{email}")
-    Call<List<EmailVO>> getEmailFromUid(@Path("email")EmailVO based64EncodedEmailVO);
+    Call<AuthenticationApi.GetResponseVO> getUidFromEmail(@Path("email")String based64EncodedEmail);
 
     @POST("/authentication/")
-    Call<List<ResultVO>> signUp(@Body EmailVO emailVO);
+    Call<AuthenticationsApi.PostResponseVO> signUp(@Body AuthenticationsApi.PostRequestBody emailBody);
 
     @DELETE("/authentication/{uid}")
-    Call<List<ResultVO>> withDrawal(@Path("uid") UserVO userVO);
+    Call<Void> withDrawal(@Path("uid") int uid);
 
 }

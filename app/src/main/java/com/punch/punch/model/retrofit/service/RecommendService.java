@@ -1,5 +1,7 @@
 package com.punch.punch.model.retrofit.service;
 
+import com.punch.punch.model.retrofit.vo.RecommendPersonalApi;
+
 import java.util.List;
 
 import retrofit2.Call;
@@ -9,9 +11,6 @@ import retrofit2.http.Path;
 public interface RecommendService {
 
     @GET("/recommend/personal/{uid}")
-    Call<List<FoodVO>> requestPersonalRecommend(@Path("uid") UserVO userVO);
-
-    @GET("/recommend/group/{gid}")
-    Call<List<FoodVO>> requestGroupRecommend(@Path("gid") GroupVO groupVO);
+    Call<RecommendPersonalApi.GetResponseVO> requestPersonalRecommend(@Path("uid") int uid);
 
 }
