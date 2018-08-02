@@ -9,7 +9,7 @@ import com.punch.punch.view.BaseView;
 
 public interface LoginContract {
 
-    interface View extends BaseView{
+    interface View extends BaseView<Presenter>{
 
         /**
          * 인증을 위한 구글Oauth Api를 띄우는 메소드
@@ -19,7 +19,7 @@ public interface LoginContract {
         /**
          * 인증 결과를 보여주는 메소드
          */
-        void showSignResult();
+        void showSignResult(boolean isSuccess);
 
         /**
          * 로그인 성공시 메인화면을 띄우는 메소드
@@ -31,7 +31,7 @@ public interface LoginContract {
          * 액티비티를 띄우는 메소드
          * 약관 동의후 서버에 등록을 위한 토큰을 넘겨준다
          */
-        void showAgreeActivity();
+        void showAgreeActivity(String token);
     }
 
     interface Presenter extends BasePresenter{

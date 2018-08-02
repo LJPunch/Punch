@@ -12,7 +12,7 @@ public interface AgreementContract {
     String POLICY_USE_PRIVACY = "POLICY_USE_PRIVACY"; // 개인정보 사용 동의 약관
     String POLICY_ADVERTISEMENT_RECEIVE = "POLICY_ADVERTISEMENT_RECEIVE"; // 광고 수신 동의 약관
 
-    interface View extends BaseView {
+    interface View extends BaseView<Presenter>{
         /**
          * 약관동의 후에 메인화면을 띄우는 메소드
          */
