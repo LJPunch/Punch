@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.telecom.Call;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,8 +23,7 @@ import com.google.android.gms.common.api.Scope;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.punch.punch.R;
-import com.punch.punch.model.Authentication;
-import com.punch.punch.view.BasePresenter;
+import com.punch.punch.model.auth.Authentication;
 
 public class LoginFragment extends Fragment implements LoginContract.View{
 

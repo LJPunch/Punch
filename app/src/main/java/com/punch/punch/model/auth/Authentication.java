@@ -1,4 +1,4 @@
-package com.punch.punch.model;
+package com.punch.punch.model.auth;
 
 /**
  * Created by galid on 2018-06-22.

@@ -1,6 +1,6 @@
 package com.punch.punch.view.login;
 
-import com.punch.punch.model.Authentication;
+import com.punch.punch.model.auth.Authentication;
 
 public class LoginPresenter implements LoginContract.Presenter {
 

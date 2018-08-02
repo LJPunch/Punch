@@ -1,7 +1,6 @@
 package com.punch.punch.view.agreement;
 
-import com.punch.punch.model.Authentication;
-import com.punch.punch.view.login.LoginContract;
+import com.punch.punch.model.auth.Authentication;
 
 public class AgreementPresenter implements AgreementContract.Presenter {
 

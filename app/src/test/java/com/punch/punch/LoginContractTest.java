@@ -1,6 +1,6 @@
 package com.punch.punch;
 
-import com.punch.punch.model.Authentication;
+import com.punch.punch.model.auth.Authentication;
 import com.punch.punch.view.login.LoginContract;
 import com.punch.punch.view.login.LoginFragment;
 import com.punch.punch.view.login.LoginPresenter;
