@@ -5,7 +5,5 @@ package com.punch.punch.view;
  */
 
 public interface BaseView <T extends BasePresenter>{
-
     void setPresenter(T presenter);
-
 }

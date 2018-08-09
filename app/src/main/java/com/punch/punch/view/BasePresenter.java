@@ -5,4 +5,5 @@ package com.punch.punch.view;
  */
 
 public interface BasePresenter {
+    void start();
 }

@@ -5,7 +5,6 @@ package com.punch.punch.model.retrofit.vo;
  *
  */
 public class RecommendPersonalApi {
-
     /**
      * foodname : 음식 이름
      * foodpicture : 음식 사진 ( base64 encoded string )

@@ -26,4 +26,9 @@ public class LoginPresenter implements LoginContract.Presenter {
             mView.showAgreeActivity(token);
         }
     }
+
+    @Override
+    public void start() {
+
+    }
 }
