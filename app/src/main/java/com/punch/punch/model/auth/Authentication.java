@@ -6,10 +6,10 @@ package com.punch.punch.model.auth;
 
 public class Authentication implements OauthAuthentication{
 
-    private String uid;
+    private int uid;
 
     private Authentication(){
-        uid = null;
+        uid = -1;
     }
 
     private static final class Singleton{
@@ -64,7 +64,7 @@ public class Authentication implements OauthAuthentication{
 
         if(isSuccess){
 
-            uid = null;
+            uid = -1;
         }else{
 
         }
@@ -72,7 +72,7 @@ public class Authentication implements OauthAuthentication{
     }
 
     @Override
-    public String getUid() {
+    public int getUid() {
         return this.uid;
     }
 }
