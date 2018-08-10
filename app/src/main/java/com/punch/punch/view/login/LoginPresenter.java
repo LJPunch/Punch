@@ -17,7 +17,7 @@ public class LoginPresenter implements LoginContract.Presenter {
     public void requestAuthentication(String token) {
         Authentication authentication = mAuthentication;
         boolean isSuccess = authentication.signIn(token);
-        String uid = authentication.getUid();
+        int uid = authentication.getUid();
         if(isSuccess){
             mView.showSignResult(true);
             mView.showMainActivity();
