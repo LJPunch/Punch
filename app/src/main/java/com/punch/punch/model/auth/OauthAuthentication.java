@@ -30,5 +30,5 @@ public interface OauthAuthentication {
     /**
      * @return 토큰을 통해 서버에서 받아온 Uid를 반환
      */
-    String getUid();
+    int getUid();
 }
