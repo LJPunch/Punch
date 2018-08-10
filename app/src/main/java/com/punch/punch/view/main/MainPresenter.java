@@ -4,7 +4,6 @@ import com.punch.punch.model.auth.Authentication;
 import com.punch.punch.model.retrofit.service.UserService;
 import com.punch.punch.model.retrofit.vo.UserTasteApi;
 import com.punch.punch.util.network.retrofit.RetrofitClient;
-import com.punch.punch.view.login.LoginContract;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -13,7 +12,6 @@ import retrofit2.Response;
 public class MainPresenter implements MainContract.Presenter {
 
     private MainContract.View mView;
-    private Authentication mAuthentication;
 
     public MainPresenter(MainContract.View view) {
         mView = view;
@@ -49,7 +47,7 @@ public class MainPresenter implements MainContract.Presenter {
 
             @Override
             public void onFailure(Call<UserTasteApi.GetResponseVO> call, Throwable t) {
-
+                mView.showToast(call.toString());
             }
         });
     }

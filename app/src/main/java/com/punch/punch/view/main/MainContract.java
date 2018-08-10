@@ -12,6 +12,12 @@ public interface MainContract {
          */
         void displayTaste(float salty, float sour, float sweet, float bitter, float spicy);
 
+        /**
+         * toast 를 통해 메시지를 알리고 싶을때 사용
+         * @param message 알릴 메시지
+         */
+        void showToast(String message);
+
     }
 
     interface Presenter extends BasePresenter{
