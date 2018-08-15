@@ -11,20 +11,19 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
-import com.punch.punch.R;
+import com.punch.punch.databinding.FragmentAgreementBinding;
 
-
-public class AgreementFragment extends Fragment implements AgreementContract.View {
+public class AgreementFragment extends Fragment implements AgreementViewModel.Navigator {
 
     private static final String TAG = "AgreementFragment";
 
     private static final String ARG_OAUTH_TOKEN = "ARG_OAUTH_TOKEN";
 
     private String mToken;
-    private AgreementContract.Presenter mPresenter;
     private Callbacks mCallbacks;
+    private FragmentAgreementBinding mFragmentAgreementBinding;
+    private AgreementViewModel mAgreementViewModel;
 
     public static AgreementFragment getInstance(String token) {
         AgreementFragment fragment = new AgreementFragment();
@@ -39,11 +38,6 @@ public class AgreementFragment extends Fragment implements AgreementContract.Vie
     @Override
     public void showMainActivity() {
         mCallbacks.onCallMainActivity();
-    }
-
-    @Override
-    public void setPresenter(AgreementContract.Presenter presenter) {
-        this.mPresenter = presenter;
     }
 
 
@@ -80,26 +74,17 @@ public class AgreementFragment extends Fragment implements AgreementContract.Vie
         mToken = getArguments().getString(ARG_OAUTH_TOKEN);
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-
-        AgreementContract.Presenter presenter = new AgreementPresenter(this);
-    }
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View root = inflater.inflate(R.layout.fragment_agreement, null);
+        mFragmentAgreementBinding = FragmentAgreementBinding.inflate(inflater,container,false);
 
-        Button signupButton = root.findViewById(R.id.button_signup);
-        signupButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mPresenter.registAgreement(mToken, null);
-            }
-        });
+        mAgreementViewModel = new AgreementViewModel(mToken);
+        mAgreementViewModel.setNavigator(this);
+        mFragmentAgreementBinding.setAgreementViewModel(mAgreementViewModel);
+
+        View root = mFragmentAgreementBinding.getRoot();
 
         return root;
     }
