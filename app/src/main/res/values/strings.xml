@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Punch</string>
     <string name="signup_button_text">가입</string>
+    <string name="signIn_button_text">SignIn</string>
 </resources>

@@ -22,22 +22,47 @@ import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.Scope;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.punch.punch.R;
-import com.punch.punch.model.auth.Authentication;
+import com.punch.punch.databinding.FragmentLoginBinding;
 
-public class LoginFragment extends Fragment implements LoginContract.View{
+
+public class LoginFragment extends Fragment implements LoginViewModel.Navigator{
 
     private static final String TAG = "LoginFragment";
     private static final int RC_SIGN_IN = 9001;
 
-    private LoginContract.Presenter mPresenter;
     private GoogleSignInClient mGoogleSignInClient;
     private Callbacks mCallbacks;
+    private FragmentLoginBinding mFragmentLoginBinding;
+    private LoginViewModel mLoginViewModel;
 
     public static LoginFragment getInstance(){
         LoginFragment fragment = new LoginFragment();
 
         return fragment;
+    }
+
+    @Override
+    public void googleSignIn() {
+        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+        startActivityForResult(signInIntent, RC_SIGN_IN);
+    }
+
+    @Override
+    public void showMainActivity() {
+        mCallbacks.onCallMainActivity();
+    }
+
+    @Override
+    public void showAgreeActivity(String token) {
+        mCallbacks.onCallAgreementActivity(token);
+    }
+
+    @Override
+    public void showSignResult(boolean isSuccess) {
+        if(isSuccess)
+            Toast.makeText(getContext(),"Login Success",Toast.LENGTH_SHORT).show();
+        else
+            Toast.makeText(getContext(),"Login Fail",Toast.LENGTH_SHORT).show();
     }
 
     public interface Callbacks{
@@ -84,14 +109,12 @@ public class LoginFragment extends Fragment implements LoginContract.View{
     public void onStart() {
         super.onStart();
 
-        LoginContract.Presenter presenter = new LoginPresenter(this, Authentication.getInstance());
-
         // Check if the user is already signed in and all required scopes are granted
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(getContext());
         if (account != null && GoogleSignIn.hasPermissions(account, new Scope(Scopes.PROFILE))) {
-            mPresenter.requestAuthentication(account.getId());
+            mLoginViewModel.onSuccessGoogleSignIn(account.getId());
         } else {
-
+            mLoginViewModel.onFailGoogleSignIn();
         }
 
     }
@@ -117,15 +140,16 @@ public class LoginFragment extends Fragment implements LoginContract.View{
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View root = inflater.inflate(R.layout.fragment_login,null);
-        root.findViewById(R.id.sign_in_button).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showSignIn();
-            }
-        });
+        mFragmentLoginBinding = FragmentLoginBinding.inflate(inflater,container,false);
+
+        mLoginViewModel = new LoginViewModel();
+        mLoginViewModel.setNavigator(this);
+        mFragmentLoginBinding.setLoginViewModel(mLoginViewModel);
+
+        View root = mFragmentLoginBinding.getRoot();
 
         return root;
+
     }
 
     @Override
@@ -145,43 +169,12 @@ public class LoginFragment extends Fragment implements LoginContract.View{
         try {
             // Signed in successfully, show authenticated U
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
-            mPresenter.requestAuthentication(account.getId());
+            mLoginViewModel.onSuccessGoogleSignIn(account.getId());
         } catch (ApiException e) {
             // Signed out, show unauthenticated UI.
             Log.w(TAG, "handleSignInResult:error", e);
             showSignResult(false);
         }
     }
-
-    @Override
-    public void showSignIn() {
-        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-        startActivityForResult(signInIntent, RC_SIGN_IN);
-    }
-
-
-    @Override
-    public void showSignResult(boolean isSuccess) {
-        if(isSuccess)
-            Toast.makeText(getContext(),"Login Success",Toast.LENGTH_SHORT).show();
-        else
-            Toast.makeText(getContext(),"Login Fail",Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void showMainActivity() {
-        mCallbacks.onCallMainActivity();
-    }
-
-    @Override
-    public void showAgreeActivity(String token) {
-        mCallbacks.onCallAgreementActivity(token);
-    }
-
-    @Override
-    public void setPresenter(LoginContract.Presenter presenter) {
-        this.mPresenter = presenter;
-    }
-
 
 }

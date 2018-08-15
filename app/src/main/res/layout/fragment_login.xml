@@ -1,15 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <com.google.android.gms.common.SignInButton
-        android:id="@+id/sign_in_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:visibility="visible"
-        tools:visibility="gone" />
+    <data>
 
-</android.support.constraint.ConstraintLayout>
+        <variable
+            name="loginViewModel"
+            type="com.punch.punch.view.login.LoginViewModel" />
+    </data>
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <Button
+            android:id="@+id/sign_in_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:onClick="@{loginViewModel::onSignInClick}"
+            android:visibility="visible"
+            android:text="@string/signIn_button_text"
+            tools:visibility="gone" />
+
+    </android.support.constraint.ConstraintLayout>
+</layout>
