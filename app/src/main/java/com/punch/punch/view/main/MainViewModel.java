@@ -1,5 +1,8 @@
 package com.punch.punch.view.main;
 
+import android.databinding.ObservableField;
+import android.view.View;
+
 import com.punch.punch.model.auth.Authentication;
 import com.punch.punch.model.retrofit.service.UserService;
 import com.punch.punch.model.retrofit.vo.UserTasteApi;
@@ -9,24 +12,60 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MainPresenter implements MainContract.Presenter {
+public class MainViewModel {
 
-    private MainContract.View mView;
+    interface Navigator {
 
-    public MainPresenter(MainContract.View view) {
-        mView = view;
-        mView.setPresenter(this);
+        /**
+         * toast 를 통해 메시지를 알리고 싶을때 사용
+         * @param message 알릴 메시지
+         */
+        void showToast(String message);
+
+        void showPersonalAnalysis();
+
+        void showGroupAnalysis();
+
     }
 
-    @Override
-    public void start() {
+    private Navigator mNavigator;
+    public final ObservableField<String> analysisResult;
+
+    public MainViewModel(){
+        analysisResult = new ObservableField<>();
+    }
+
+    public void setNavigator(Navigator navigator){
+        this.mNavigator = navigator;
+    }
+
+
+    /**
+     * MainView 가 로딩될때 호출될 start 메소드
+     */
+    public void onStart(){
         requestTasteFromWebApi();
     }
 
-    @Override
-    public void requestTaste() {
+    /**
+     * 유저의 음식 취향을 요청하는 메소드
+     */
+    public void onTasteLoad(){
         requestTasteFromWebApi();
     }
+
+    public void onPersonalClick(View view){
+        mNavigator.showPersonalAnalysis();
+    }
+
+    public void onGroupClick(View view){
+        mNavigator.showGroupAnalysis();
+    }
+
+    private void setAnalysisResult(float salty, float sour, float sweet, float bitter, float spicy){
+        analysisResult.set(String.format("%f\n%f\n%f\n%f\n%f", salty, sour, sweet, bitter, spicy));
+    }
+
 
     private void requestTasteFromWebApi() {
         RetrofitClient client = RetrofitClient.getInstance();
@@ -42,13 +81,14 @@ public class MainPresenter implements MainContract.Presenter {
                 float sour = vo.sour / 10000.0f;
                 float spicy = vo.spicy / 10000.0f;
                 float sweet = vo.sweet / 10000.0f;
-                mView.displayTaste(salty, sour, sweet, bitter, spicy);
+                setAnalysisResult(salty, sour, sweet, bitter, spicy);
             }
 
             @Override
             public void onFailure(Call<UserTasteApi.GetResponseVO> call, Throwable t) {
-                mView.showToast(call.toString());
+                mNavigator.showToast(call.toString());
             }
         });
     }
+
 }

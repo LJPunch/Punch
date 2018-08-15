@@ -4,24 +4,22 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.punch.punch.R;
+import com.punch.punch.databinding.FragmentMainBinding;
 
-public class MainFragment extends Fragment implements MainContract.View {
+
+public class MainFragment extends Fragment implements MainViewModel.Navigator {
 
     private static final String TAG = "MainFragment";
 
     private Callbacks mCallbacks;
-    private MainContract.Presenter mPresenter;
-    private TextView mTasteView;
+    private FragmentMainBinding mFragmentMainBinding;
+    private MainViewModel mMainViewModel;
 
     public static MainFragment getInstance() {
         MainFragment fragment = new MainFragment();
@@ -29,10 +27,6 @@ public class MainFragment extends Fragment implements MainContract.View {
         return fragment;
     }
 
-    @Override
-    public void displayTaste(float salty, float sour, float sweet, float bitter, float spicy) {
-        mTasteView.setText(String.format("%f\n%f\n%f\n%f\n%f", salty, sour, sweet, bitter, spicy));
-    }
 
     @Override
     public void showToast(String message) {
@@ -40,8 +34,13 @@ public class MainFragment extends Fragment implements MainContract.View {
     }
 
     @Override
-    public void setPresenter(MainContract.Presenter presenter) {
-        mPresenter = presenter;
+    public void showPersonalAnalysis() {
+        mCallbacks.onCallPersonalRecommend();
+    }
+
+    @Override
+    public void showGroupAnalysis() {
+        mCallbacks.onCallGroupRecommend();
     }
 
     public interface Callbacks {
@@ -73,30 +72,21 @@ public class MainFragment extends Fragment implements MainContract.View {
     @Override
     public void onStart() {
         super.onStart();
-        MainContract.Presenter presenter = new MainPresenter(this);
-        presenter.start();
+        mMainViewModel.onStart();
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View root = inflater.inflate(R.layout.fragment_main, null);
-        mTasteView = root.findViewById(R.id.text_view_taste);
-        FloatingActionButton personalButton = root.findViewById(R.id.button_personal_recommend);
-        personalButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mCallbacks.onCallPersonalRecommend();
-            }
-        });
-        FloatingActionButton groupButton = root.findViewById(R.id.button_group_recommend);
-        groupButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mCallbacks.onCallGroupRecommend();
-            }
-        });
+        mFragmentMainBinding = FragmentMainBinding.inflate(inflater,container,false);
+
+        mMainViewModel = new MainViewModel();
+        mMainViewModel.setNavigator(this);
+        mFragmentMainBinding.setMainViewModel(mMainViewModel);
+
+        View root = mFragmentMainBinding.getRoot();
+
         return root;
     }
 
