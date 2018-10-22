@@ -6,6 +6,7 @@ recommand lunch App
   - 매주 한가지 같은 기능에 대해 각자 코드를 구현한다.
   - 모여서 각자의 코드를 설명하고 나은 방식을 채택한다.
   - 이때 작업은 브랜치를 만들어 하며, Pull request 를 통해 Merge 기록을 남긴다.
+* 취업 준비로 인해 잠정 중단
 
 1. 기획 배경 : 
 https://development0.blogspot.com/2018/10/punch-project-1_21.html
@@ -29,7 +30,7 @@ https://development0.blogspot.com/2018/10/punch-project-5_21.html
 6. RestAPI 설계 결정 사항(진행중) : 
 https://development0.blogspot.com/2018/10/punch-project-6-rest-api.html
 
-7. UML 클래스 다이어그램
+7. UML 클래스 다이어그램(진행중) : 
 - Login UI
 https://development0.blogspot.com/2018/10/punch-project-7-uml-login-ui.html
 
